@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F6E6D7;
+}
+
+a {
+  text-decoration: none;
+}
+
+.Welcome {
+    margin: auto;
+    margin-top: 190px;
+    width: 500px;
+    padding-bottom: 10px;
+    border: 4px solid #EFDDCC;
+    border-radius: 10px;
+    background-color: #EFDDCC;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.OS {
+    font-size: 50px;
+    font-weight: bold;
+    color: #6C5C48;
+    line-height: 0.5;
+}
+
+.Introduction {
+    font-size: 25px;
+    font-weight: bold;
+    color: #b5a99c;
+    line-height: 1.1;
+}
+
+.Crossaint1 {
+    width: 150px;
+    transform: rotate(-15deg);
+}
+
+.Crossaint2 {
+    width: 150px;
+    transform: rotate(45deg);
+    margin-bottom: 25px;
+}
+
+.Crossaint3 {
+    width: 150px;
+    transform: rotate(15deg);
+}
+
+.Instagram {
+    height: 36px;
+    width: 36px;
+}
+
