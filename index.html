@@ -1,28 +1,46 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<link rel="stylesheet" href="./style.css" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>catOS</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
 <body>
-    <div class="Welcome">
-    <h1 class="OS"> Welcome to CatOS</h1>
-    <h2 class="Introduction">My name is Jastk and I am creating my second projects with HTML and CSS</h2>
-    
 
-    <img src="images/Croissant.png" class="Crossaint1" />
-    <img src="images/Croissant.png" class="Crossaint2" />
-    <img src="images/Croissant.png" class="Crossaint3" />
-    
-
-    <a href="https://www.instagram.com/stardance.hackclub/" >
-  <img src="images/Instagram.webp" class="Instagram">
-    </a>
-    <a href="https://www.instagram.com/stardance.hackclub/" >
-  <img src="images/Instagram.webp" class="Instagram">
-    </a>
-
-    
+  <div class="Welcome" id="welcome">
+  
+  <div id="welcomeheader">
+    <span class="window-title">Handle</span>
+    <div class="window-controls">
+      <span id="welcomeclose" class="close-btn" title="Zavřít">✕</span>
     </div>
+  </div>
 
+  <h1 class="OS">Welcome to catOS</h1>
+  <h2 class="Introduction">My name is Jastk and I am creating my second projects with HTML and CSS</h2>
+
+  <img src="images/Croissant.png" class="Crossaint1" alt="Croissant" />
+  <img src="images/Croissant.png" class="Crossaint2" alt="Croissant" />
+  <img src="images/Croissant.png" class="Crossaint3" alt="Croissant" />
+
+  <div>
+    <a href="https://www.instagram.com/stardance.hackclub/" target="_blank" rel="noopener noreferrer">
+  <img src="images/Instagram.webp" class="Instagram" alt="Instagram">
+</a>
+    <a href="https://stardance.hackclub.com/home" target="_blank" rel="noopener noreferrer">
+      <img src="images/Google.png" class="Google" alt="Instagram">
+    </a>
+  </div>
+</div>
+
+  <div class="Footer">
+    <p class="Textlogo">catOS</p>
+    <p class="Time" id="timeElement">Time</p>
+  </div>
+
+  <p style="cursor: pointer" id="welcomeopen">catOS</p>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
