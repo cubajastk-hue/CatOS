@@ -1,82 +1,118 @@
+// 1. Hodiny
 function updateTime() {
-        var currentTime = new Date().toLocaleString();
-        var timeText = document.querySelector("#timeElement");
+    var currentTime = new Date().toLocaleString();
+    var timeText = document.querySelector("#timeElement");
+    if (timeText) {
         timeText.innerHTML = currentTime;
     }
-    setInterval(updateTime, 1000);
+}
+setInterval(updateTime, 1000);
+updateTime();
 
-    // Make the DIV element draggable:
-dragElement(document.getElementById("welcome"));
-
-// Step 1: Define a function called `dragElement` that makes an HTML element draggable.
-function dragElement(element) {
-  // Step 2: Set up variables to keep track of the element's position.
-  var initialX = 0;
-  var initialY = 0;
-  var currentX = 0;
-  var currentY = 0;
-
-  // Step 3: Check if there is a special header element associated with the draggable element.
-  if (document.getElementById(element.id + "header")) {
-    // Step 4: If present, assign the `dragMouseDown` function to the header's `onmousedown` event.
-    // This allows you to drag the window around by its header.
-    document.getElementById(element.id + "header").onmousedown = startDragging;
-  } else {
-    // Step 5: If not present, assign the function directly to the draggable element's `onmousedown` event.
-    // This allows you to drag the window by holding down anywhere on the window.
-    element.onmousedown = startDragging;
-  }
-
-  // Step 6: Define the `startDragging` function to capture the initial mouse position and set up event listeners.
-  function startDragging(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // Step 7: Get the mouse cursor position at startup.
-    initialX = e.clientX;
-    initialY = e.clientY;
-    // Step 8: Set up event listeners for mouse movement (`elementDrag`) and mouse button release (`closeDragElement`).
-    document.onmouseup = stopDragging;
-    document.onmousemove = dragElement;
-  }
-
-  // Step 9: Define the `elementDrag` function to calculate the new position of the element based on mouse movement.
-  function dragElement(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // Step 10: Calculate the new cursor position.
-    currentX = initialX - e.clientX;
-    currentY = initialY - e.clientY;
-    initialX = e.clientX;
-    initialY = e.clientY;
-    // Step 11: Update the element's new position by modifying its `top` and `left` CSS properties.
-    element.style.top = (element.offsetTop - currentY) + "px";
-    element.style.left = (element.offsetLeft - currentX) + "px";
-  }
-
-  // Step 12: Define the `stopDragging` function to stop tracking mouse movement by removing the event listeners.
-  function stopDragging() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
+// 2. Z-Index pro překrývání oken (Aktivní okno do popředí)
+var highestZIndex = 10;
+function bringToFront(element) {
+    highestZIndex++;
+    element.style.zIndex = highestZIndex;
 }
 
-var welcomeScreen = document.querySelector("#welcome")
+// 3. Funkce pro přetahování oken (Drag)
+function dragElement(element) {
+    var initialX = 0, initialY = 0, currentX = 0, currentY = 0;
+
+    var header = document.getElementById(element.id + "header");
+    if (header) {
+        header.onmousedown = startDragging;
+    } else {
+        element.onmousedown = startDragging;
+    }
+
+    function startDragging(e) {
+        e = e || window.event;
+        e.preventDefault();
+        
+        bringToFront(element); // Při kliknutí dá okno do popředí
+
+        initialX = e.clientX;
+        initialY = e.clientY;
+
+        document.onmouseup = stopDragging;
+        document.onmousemove = drag;
+    }
+
+    function drag(e) {
+        e = e || window.event;
+        e.preventDefault();
+
+        currentX = initialX - e.clientX;
+        currentY = initialY - e.clientY;
+        initialX = e.clientX;
+        initialY = e.clientY;
+
+        element.style.top = (element.offsetTop - currentY) + "px";
+        element.style.left = (element.offsetLeft - currentX) + "px";
+    }
+
+    function stopDragging() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+
+// 4. Pomocné funkce pro otevírání/zavírání
 function closeWindow(element) {
-  element.style.display = "none"
+    element.style.display = "none";
 }
 
 function openWindow(element) {
-  element.style.display = "block"
+    element.style.display = "block";
+    bringToFront(element); // Při otevření dá okno do popředí
 }
 
-var welcomeScreenClose = document.querySelector("#welcomeclose")
+// --- LOGIKA PRO OKNO WELCOME (catOS) ---
+var welcomeScreen = document.querySelector("#welcome");
+var welcomeScreenClose = document.querySelector("#welcomeclose");
+var welcomeScreenOpen = document.querySelector("#welcomeopen");
 
-var welcomeScreenOpen = document.querySelector("#welcomeopen")
+if (welcomeScreen) {
+    dragElement(welcomeScreen);
 
-welcomeScreenClose.addEventListener("click", function() {
-  closeWindow(welcomeScreen);
-});
+    if (welcomeScreenClose) {
+        welcomeScreenClose.addEventListener("click", function() {
+            closeWindow(welcomeScreen);
+        });
+    }
 
-welcomeScreenOpen.addEventListener("click", function() {
-  openWindow(welcomeScreen);
-});
+    if (welcomeScreenOpen) {
+        welcomeScreenOpen.addEventListener("click", function() {
+            openWindow(welcomeScreen);
+        });
+    }
+}
+
+// --- LOGIKA PRO OKNO NOTES ---
+var notesScreen = document.querySelector("#notes");
+var notesScreenClose = document.querySelector("#notesclose");
+var notesScreenOpen = document.querySelector("#notesopen");
+
+if (notesScreen) {
+    dragElement(notesScreen);
+
+    if (notesScreenClose) {
+        notesScreenClose.addEventListener("click", function() {
+            closeWindow(notesScreen);
+        });
+    }
+
+    if (notesScreenOpen) {
+        notesScreenOpen.addEventListener("click", function() {
+            openWindow(notesScreen);
+        });
+    }
+}
+var biggestIndex = 100;
+function addWindowTapHandling(element) {
+  element.addEventListener("mousedown", () =>
+    handleWindowTap(element)
+  )
+}

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url('/images/Cutecat.png');
+  background-image: url('images/Cutecat.png');
   background-size: cover;
 }
 
@@ -9,12 +9,13 @@ a {
   text-decoration: none;
 }
 
-.Welcome {
+
+.window {
   position: absolute;
-  left: 30px;
-  top: 150px;
-  width: 500px;
-  padding-bottom: 15px;
+  left: 100px;
+  top: 120px;
+  width: 450px; 
+  padding-bottom: 20px;
   border: 4px solid #6C5C48;
   border-radius: 15px;
   background-color: #EFDDCC;
@@ -22,9 +23,11 @@ a {
   font-family: 'Courier New', Courier, monospace;
   overflow: hidden; 
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 100;
 }
 
-#welcomeheader {
+
+.window-header {
   margin: 0;
   padding: 8px 14px;
   background-color: #6C5C48;
@@ -37,14 +40,10 @@ a {
   user-select: none;
 }
 
-
 .window-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   font-weight: bold;
   font-size: 16px;
-  display: none;
+  color: #EFDDCC;
 }
 
 .window-controls {
@@ -67,46 +66,92 @@ a {
 }
 
 .OS {
-  font-size: 50px;
+  font-size: 40px; 
   font-weight: bold;
   color: #6C5C48;
-  line-height: 0.5;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .Introduction {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
-  color: #b5a99c;
-  line-height: 1.1;
+  color: #a39587;
+  line-height: 1.4;
+  padding: 0 25px;
+  margin-bottom: 20px;
+}
+
+.Crossaint1, .Crossaint2, .Crossaint3 {
+  width: 120px; 
+  height: auto;
+  display: inline-block;
+  margin: 0 5px 10px 10px;
 }
 
 .Crossaint1 {
-  width: 150px;
-  transform: rotate(-15deg);
+  transform: rotate(-25deg);
 }
 
 .Crossaint2 {
-  width: 150px;
-  transform: rotate(45deg);
-  margin-bottom: 25px;
+  transform: rotate(30deg);
 }
 
 .Crossaint3 {
-  width: 150px;
   transform: rotate(-15deg);
 }
 
-.Instagram {
-  height: 36px;
-  width: 36px;
-  margin-right: 8px;
+/* IKONY SOCIÁLNÍCH SÍTÍ */
+.Instagram, .Google {
+  height: 32px;
+  width: 32px;
+  margin: 0 5px;
+  transition: transform 0.2s ease;
 }
 
-.Google {
-  height: 36px;
-  width: 36px;
+.Instagram:hover, .Google:hover {
+  transform: scale(1.1);
 }
 
+
+.desktop-apps {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column; 
+  gap: 15px; 
+  z-index: 10; 
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  font-size: 15px;
+  font-weight: bold;
+  border: 2px solid #6C5C48;
+  width: 60px; 
+  height: 60px;
+  border-radius: 12px;
+  background-color: #F6E6D7;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+  transition: all 0.2s ease; 
+  cursor: pointer;
+}
+
+.App p {
+  margin: 0;
+  text-align: center;
+}
+
+.App:hover {
+  transform: scale(1.05); 
+  background-color: #f0d8c2; 
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15); 
+}
+
+/* PATKA */
 .Footer {
   position: fixed;
   bottom: 0;
@@ -118,25 +163,14 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 0px 20px; 
-  background-color: rgb(239 221 204 / 10%);
+  background-color: rgba(239, 221, 204, 0.4);
   backdrop-filter: blur(10px);
   font-family: 'Courier New', Courier, monospace;
   border-top: 2px solid #6C5C48; 
+  z-index: 200;
 }
 
-.Textlogo {
-  font-size: 30px;
-  font-weight: bold;
-  color: #6C5C48;
-  border: 2px solid #F6E6D7;
-  background-color: #F6E6D7;
-  border-radius: 50px;
-  box-sizing: border-box;
-  padding: 2px 10px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.Time {
+.Textlogo, .Time {
   font-size: 17px;
   font-weight: bold;
   color: #6C5C48;
@@ -144,6 +178,14 @@ a {
   background-color: #F6E6D7;
   border-radius: 50px;
   box-sizing: border-box;
-  padding: 5px 10px;
+  padding: 5px 12px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Textlogo {
+  font-size: 20px;
+}
+
+#notes {
+  display: none;
 }
