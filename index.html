@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- OKNO 1: WELCOME (catOS) -->
+  <!-- WELCOME WINDOW -->
   <div class="window" id="welcome">
     <div id="welcomeheader" class="window-header">
       <span class="window-title">catOS</span>
@@ -18,7 +18,7 @@
     </div>
 
     <h1 class="OS">Welcome to catOS</h1>
-    <h2 class="Introduction">My name is Jastk and I am creating my second projects with HTML and CSS</h2>
+    <h2 class="Introduction">Hi, Iam Jastk and I am creating my second projects with HTML and CSS.</h2>
 
     <img src="images/Croissant.png" class="Crossaint1" alt="Croissant" />
     <img src="images/Croissant.png" class="Crossaint2" alt="Croissant" />
@@ -34,25 +34,28 @@
     </div>
   </div>
 
-  <!-- OKNO 2: NOTES -->
+  <!-- NOTES WINDOW -->
   <div class="window" id="notes">
-    <div id="notesheader" class="window-header">
+    <div class="window-header" id="notesheader">
       <span class="window-title">Notes</span>
       <div class="window-controls">
         <span id="notesclose" class="close-btn" title="Zavřít">✕</span>
       </div>
     </div>
 
-    <p>Hacker Notes</p>
+    <div class="notes-container">
+      <div class="notes-sidebar" id="noteSidebar"></div>
+      <div class="note-content" id="noteContent"></div>
+    </div>
   </div>
 
-  <!-- PATKA S ČASEM -->
-  <div class="Footer">
+  <!-- FOOTER -->
+  <div class="Footer" id="top">
     <p class="Textlogo">catOS</p>
     <p class="Time" id="timeElement">Time</p>
   </div>
 
-  <!-- IKONY NA PLOŠE -->
+  <!-- DESKTOP ICONS -->
   <div class="desktop-apps">
     <div class="App" id="welcomeopen">
       <p>catOS</p>

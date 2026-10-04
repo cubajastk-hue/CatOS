@@ -1,6 +1,6 @@
-// 1. Hodiny
+// 1. Update time display
 function updateTime() {
-    var currentTime = new Date().toLocaleString();
+    var currentTime = new Date().toLocaleString("en-US");
     var timeText = document.querySelector("#timeElement");
     if (timeText) {
         timeText.innerHTML = currentTime;
@@ -9,18 +9,23 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-// 2. Z-Index pro překrývání oken (Aktivní okno do popředí)
-var highestZIndex = 10;
+// 2. Layer management (Z-Index)
+var biggestIndex = 10;
+var topBar = document.querySelector("#top");
+
 function bringToFront(element) {
-    highestZIndex++;
-    element.style.zIndex = highestZIndex;
+    biggestIndex++;
+    element.style.zIndex = biggestIndex;
+    if (topBar) {
+        topBar.style.zIndex = biggestIndex + 1; // Top bar stays on top
+    }
 }
 
-// 3. Funkce pro přetahování oken (Drag)
+// 3. Window dragging functionality with screen boundaries
 function dragElement(element) {
     var initialX = 0, initialY = 0, currentX = 0, currentY = 0;
-
     var header = document.getElementById(element.id + "header");
+
     if (header) {
         header.onmousedown = startDragging;
     } else {
@@ -30,8 +35,8 @@ function dragElement(element) {
     function startDragging(e) {
         e = e || window.event;
         e.preventDefault();
-        
-        bringToFront(element); // Při kliknutí dá okno do popředí
+
+        bringToFront(element);
 
         initialX = e.clientX;
         initialY = e.clientY;
@@ -49,8 +54,31 @@ function dragElement(element) {
         initialX = e.clientX;
         initialY = e.clientY;
 
-        element.style.top = (element.offsetTop - currentY) + "px";
-        element.style.left = (element.offsetLeft - currentX) + "px";
+        // Calculate target positions
+        var newTop = element.offsetTop - currentY;
+        var newLeft = element.offsetLeft - currentX;
+
+        // Calculate bottom bar height
+        var footerHeight = topBar ? topBar.offsetHeight : 0;
+
+        // Screen boundary limits
+        var minTop = 0;
+        var maxTop = window.innerHeight - element.offsetHeight - footerHeight;
+        var minLeft = 0;
+        var maxLeft = window.innerWidth - element.offsetWidth;
+
+        // Prevent negative maximums if window is larger than screen
+        if (maxTop < 0) maxTop = 0;
+        if (maxLeft < 0) maxLeft = 0;
+
+        // Apply boundaries
+        if (newTop < minTop) newTop = minTop;
+        if (newTop > maxTop) newTop = maxTop;
+        if (newLeft < minLeft) newLeft = minLeft;
+        if (newLeft > maxLeft) newLeft = maxLeft;
+
+        element.style.top = newTop + "px";
+        element.style.left = newLeft + "px";
     }
 
     function stopDragging() {
@@ -59,60 +87,110 @@ function dragElement(element) {
     }
 }
 
-// 4. Pomocné funkce pro otevírání/zavírání
+// 4. Open and close window functions
 function closeWindow(element) {
     element.style.display = "none";
 }
 
 function openWindow(element) {
     element.style.display = "block";
-    bringToFront(element); // Při otevření dá okno do popředí
+    bringToFront(element);
 }
 
-// --- LOGIKA PRO OKNO WELCOME (catOS) ---
+// Window event handlers
 var welcomeScreen = document.querySelector("#welcome");
 var welcomeScreenClose = document.querySelector("#welcomeclose");
 var welcomeScreenOpen = document.querySelector("#welcomeopen");
 
 if (welcomeScreen) {
     dragElement(welcomeScreen);
-
-    if (welcomeScreenClose) {
-        welcomeScreenClose.addEventListener("click", function() {
-            closeWindow(welcomeScreen);
-        });
-    }
-
-    if (welcomeScreenOpen) {
-        welcomeScreenOpen.addEventListener("click", function() {
-            openWindow(welcomeScreen);
-        });
-    }
+    if (welcomeScreenClose) welcomeScreenClose.addEventListener("click", () => closeWindow(welcomeScreen));
+    if (welcomeScreenOpen) welcomeScreenOpen.addEventListener("click", () => openWindow(welcomeScreen));
 }
 
-// --- LOGIKA PRO OKNO NOTES ---
 var notesScreen = document.querySelector("#notes");
 var notesScreenClose = document.querySelector("#notesclose");
 var notesScreenOpen = document.querySelector("#notesopen");
 
 if (notesScreen) {
     dragElement(notesScreen);
-
-    if (notesScreenClose) {
-        notesScreenClose.addEventListener("click", function() {
-            closeWindow(notesScreen);
-        });
-    }
-
-    if (notesScreenOpen) {
-        notesScreenOpen.addEventListener("click", function() {
-            openWindow(notesScreen);
-        });
-    }
+    if (notesScreenClose) notesScreenClose.addEventListener("click", () => closeWindow(notesScreen));
+    if (notesScreenOpen) notesScreenOpen.addEventListener("click", () => openWindow(notesScreen));
 }
-var biggestIndex = 100;
-function addWindowTapHandling(element) {
-  element.addEventListener("mousedown", () =>
-    handleWindowTap(element)
-  )
+
+// 5. Notes App with LocalStorage
+var defaultNotes = [
+  {
+    title: "Welcome",
+    date: "06/28/2023",
+    content: `
+      <p contenteditable="true">
+        Welcome to <strong>Hacker Notes</strong><br><br>
+        <img src="images/Croissant.png" class="note-img" alt="Croissant" /><br><br>
+        This is a place where I store my thoughts as they come to mind. What exactly will you find when browsing through these notes? As I <del>once said</del> <ins>always say</ins>
+      </p>
+      <blockquote contenteditable="true">
+        <i>Time Will Tell<br>~ Jastk</i>
+      </blockquote>
+      <p contenteditable="true">
+        I suppose you may see a bit of content about technology. Perhaps some insights regarding recent projects. Maybe even some thoughts regarding nature & tea? Go and find out!
+      </p>
+    `
+  },
+  {
+    title: "catOS Ideas",
+    date: "07/01/2023",
+    content: `
+      <p contenteditable="true">
+        <strong>Ideas for catOS:</strong><br><br>
+        🥐 Add draggable windows<br>
+        🥐 Custom wallpapers<br>
+        🥐 Playable mini-games
+
+        Its AI generated ...
+      </p>
+    `
+  }
+];
+
+// Load saved notes from browser memory
+var savedNotes = localStorage.getItem("catOS_notes");
+var content = savedNotes ? JSON.parse(savedNotes) : defaultNotes;
+var currentNoteIndex = 0;
+
+function renderNotes() {
+    var sidebar = document.querySelector("#noteSidebar");
+    var contentArea = document.querySelector("#noteContent");
+
+    if (!sidebar || !contentArea) return;
+
+    sidebar.innerHTML = "";
+
+    content.forEach(function(note, index) {
+        var item = document.createElement("div");
+        item.classList.add("note-item");
+        if (index === currentNoteIndex) item.classList.add("active");
+
+        item.innerHTML = `
+            <p class="note-title">${note.title}</p>
+            <p class="note-date">${note.date}</p>
+        `;
+
+        item.addEventListener("click", function() {
+            currentNoteIndex = index;
+            renderNotes();
+        });
+
+        sidebar.appendChild(item);
+    });
+
+    contentArea.innerHTML = content[currentNoteIndex].content;
+
+    // Auto-save changes on user edit
+    contentArea.oninput = function() {
+        content[currentNoteIndex].content = contentArea.innerHTML;
+        localStorage.setItem("catOS_notes", JSON.stringify(content));
+    };
 }
+
+renderNotes();
