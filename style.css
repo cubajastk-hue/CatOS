@@ -16,7 +16,7 @@ a {
   padding-bottom: 20px;
   border: 4px solid #6C5C48;
   border-radius: 15px;
-  background-color: #EFDDCC;
+  background-color: #F6E6D7;
   text-align: center;
   font-family: 'Courier New', Courier, monospace;
   overflow: hidden; 
@@ -109,44 +109,57 @@ a {
   transform: scale(1.1);
 }
 
-
 .desktop-apps {
-  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: absolute;
   top: 20px;
   left: 20px;
-  display: flex;
-  flex-direction: column; 
-  gap: 15px; 
 }
 
 .App {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center; 
-  font-size: 15px;
-  font-weight: bold;
-  border: 2px solid #6C5C48;
-  width: 60px; 
+  justify-content: center;
+  width: 60px;
   height: 60px;
-  border-radius: 12px;
-  background-color: #F6E6D7;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
-  transition: all 0.2s ease; 
+  background-color: #EBD3C0; 
+  border: 1px solid #D6BC9B;
+  border-radius: 14px;
   cursor: pointer;
+  padding: 4px;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.App:hover {
+  background-color: #DFBFA7;
+  transform: scale(1.04);
+}
+
+.app-icon {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.app-icon-cat {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin-bottom: 4px;
 }
 
 .App p {
   margin: 0;
+  font-size: 11px;
+  font-weight: bold;
+  color: #534636; 
   text-align: center;
 }
 
-.App:hover {
-  transform: scale(1.05); 
-  background-color: #f0d8c2; 
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15); 
-}
-
-/* PATKA */
 .Footer {
   position: fixed;
   bottom: 0;
@@ -283,4 +296,70 @@ a {
   position: absolute;
   top: 160px;
   left: 90px;
+}
+
+#catofy {
+  width: 320px;
+  height: 230px;
+  background-color: #F6E6D7;
+  position: absolute;
+  bottom: 100px;
+  left: 350px;
+  display:none;
+}
+
+.catofy-container {
+  padding: 16px;
+}
+
+.track-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #EBD3C0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #D6BC9B;
+}
+
+.track-title {
+  font-weight: bold;
+  color: #534636;
+  margin: 0;
+}
+
+.play-btn {
+  background-color: #6C5C48;
+  color: #FFF;
+  border: none;
+  width: 32px;          
+  height: 32px;         
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  font-size: 14px;       
+
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.play-btn:hover {
+  background-color: #534636;
+  font-size: 15px;
+}
+
+/* Zvětšení pouze ikony pauzy */
+.pause-icon {
+  font-size: 18px;       /* Přizpůsob podle potřeby */
+  font-weight: bold;
+  display: inline-block;
+  transform: translateY(-1px); /* Jemné vycentrování */
+}
+
+.play-icon {
+  font-size: 14px;
 }

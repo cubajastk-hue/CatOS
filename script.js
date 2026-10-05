@@ -194,3 +194,84 @@ function renderNotes() {
 }
 
 renderNotes();
+
+// 6. CATOFY MUSIC PLAYER
+
+// Window event handlers for catOfy
+var catofyScreen = document.querySelector("#catofy");
+var catofyScreenClose = document.querySelector("#catofyclose");
+var catofyScreenOpen = document.querySelector("#catofyopen");
+
+if (catofyScreen) {
+    dragElement(catofyScreen);
+    if (catofyScreenClose) catofyScreenClose.addEventListener("click", () => closeWindow(catofyScreen));
+    if (catofyScreenOpen) catofyScreenOpen.addEventListener("click", () => openWindow(catofyScreen));
+}
+
+var tracks = [
+  { id: 0, title: "Meow Purr Vibe", file: "audio/meow.mp3" },
+  { id: 1, title: "Cat Lo-Fi Chill", file: "audio/chill.mp3" },
+  { id: 2, title: "Midnight Purring", file: "audio/purring.mp3" }
+];
+
+var currentAudio = new Audio();
+var currentTrackId = null;
+var isPlaying = false;
+
+function renderCatofyTracks() {
+    var trackListContainer = document.querySelector("#trackList");
+    if (!trackListContainer) return;
+
+    trackListContainer.innerHTML = "";
+
+    tracks.forEach(function(track) {
+        var trackRow = document.createElement("div");
+        trackRow.classList.add("track-item");
+
+        var trackPlayingThis = (currentTrackId === track.id && isPlaying);
+        
+        // Zabalení ikony do spanu s vlastní třídou pro pauzu
+        var buttonIcon = trackPlayingThis 
+            ? '<span class="pause-icon">⏸</span>' 
+            : '<span class="play-icon">▶</span>';
+
+        trackRow.innerHTML = `
+            <p class="track-title">${track.title}</p>
+            <button class="play-btn" data-id="${track.id}">${buttonIcon}</button>
+        `;
+
+        var playButton = trackRow.querySelector(".play-btn");
+        playButton.addEventListener("click", function() {
+            togglePlayTrack(track);
+        });
+
+        trackListContainer.appendChild(trackRow);
+    });
+}
+
+function togglePlayTrack(track) {
+    if (currentTrackId === track.id) {
+        if (isPlaying) {
+            currentAudio.pause();
+            isPlaying = false;
+        } else {
+            currentAudio.play();
+            isPlaying = true;
+        }
+    } else {
+        currentAudio.pause();
+        currentAudio.src = track.file;
+        currentAudio.play();
+        currentTrackId = track.id;
+        isPlaying = true;
+    }
+
+    renderCatofyTracks();
+}
+
+currentAudio.onended = function() {
+    isPlaying = false;
+    renderCatofyTracks();
+};
+
+renderCatofyTracks();
