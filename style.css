@@ -353,14 +353,23 @@ a {
   font-size: 15px;
 }
 
-/* Zvětšení pouze ikony pauzy */
 .pause-icon {
-  font-size: 18px;       /* Přizpůsob podle potřeby */
+  font-size: 18px;       
   font-weight: bold;
   display: inline-block;
-  transform: translateY(-1px); /* Jemné vycentrování */
-}
+  transform: translateY(-1px); 
+  }
 
 .play-icon {
   font-size: 14px;
+}
+
+#cattemp {
+  position: absolute;
+  display: none;
+}
+
+#catroulette {
+  position: absolute;
+  display: none;
 }

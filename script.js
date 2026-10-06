@@ -275,3 +275,23 @@ currentAudio.onended = function() {
 };
 
 renderCatofyTracks();
+
+var cattempScreen = document.querySelector("#cattemp");
+var cattempScreenClose = document.querySelector("#cattempclose");
+var cattempScreenOpen = document.querySelector("#cattempopen");
+
+if (cattempScreen) {
+    dragElement(cattempScreen);
+    if (cattempScreenClose) cattempScreenClose.addEventListener("click", () => closeWindow(cattempScreen));
+    if (cattempScreenOpen) cattempScreenOpen.addEventListener("click", () => openWindow(cattempScreen));
+}
+
+var catrouletteScreen = document.querySelector("#catroulette");
+var catrouletteScreenClose = document.querySelector("#catrouletteclose");
+var catrouletteScreenOpen = document.querySelector("#catrouletteopen");
+
+if (catrouletteScreen) {
+    dragElement(catrouletteScreen);
+    if (catrouletteScreenClose) catrouletteScreenClose.addEventListener("click", () => closeWindow(catrouletteScreen));
+    if (catrouletteScreenOpen) catrouletteScreenOpen.addEventListener("click", () => openWindow(catrouletteScreen));
+}
