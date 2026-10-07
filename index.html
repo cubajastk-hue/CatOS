@@ -156,6 +156,33 @@
      </div>
   </div>
 
+<!-- CATOS LOADING WINDOW OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-window">
+    <h1 class="loading-title">catOS</h1>
+    
+    <!-- Animated bouncing dots -->
+    <div class="dots-spinner" id="dotsSpinner">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <!-- Status text with percentage -->
+    <p class="loading-status" id="loadingStatus">
+      Purring up... <span id="progressText">0%</span>
+    </p>
+
+    <!-- Animated progress bar -->
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- Tap to open message positioned at the bottom of the screen -->
+  <p class="tap-hint hidden" id="tapHint">Tap anywhere to open</p>
+</div>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -371,13 +371,13 @@ if (catgameScreen) {
     makeMove(index, PLAYER);
 
     if (checkWin(board, PLAYER)) {
-      statusText.textContent = "You win! 🎉";
+      statusText.textContent = "You win!";
       isGameActive = false;
       return;
     }
 
     if (checkDraw(board)) {
-      statusText.textContent = "It's a draw! 🤝";
+      statusText.textContent = "It's a draw!";
       isGameActive = false;
       return;
     }
@@ -390,9 +390,9 @@ if (catgameScreen) {
       makeMove(bestMove, BOT);
 
       if (checkWin(board, BOT)) {
-        statusText.textContent = "Bot wins! 🤖";
+        statusText.textContent = "Bot wins!";
       } else if (checkDraw(board)) {
-        statusText.textContent = "It's a draw! 🤝";
+        statusText.textContent = "It's a draw!";
       } else {
         statusText.textContent = "Your turn (X)";
         isGameActive = true;
@@ -471,3 +471,45 @@ if (catgameScreen) {
   cells.forEach(cell => cell.addEventListener("click", handleCellClick));
   if (restartBtn) restartBtn.addEventListener("click", resetGame);
 })();
+
+//CATOS LOADING SCREEN LOGIC
+document.addEventListener('DOMContentLoaded', () => {
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  const tapHint = document.getElementById('tapHint');
+
+  let progress = 0;
+  let isReady = false;
+
+  // Simulate loading progress from 0% to 100%
+  const loadingInterval = setInterval(() => {
+    progress += Math.floor(Math.random() * 10) + 3;
+
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(loadingInterval);
+
+      // Set progress bar and text to 100%
+      if (progressFill) progressFill.style.width = '100%';
+      if (progressText) progressText.textContent = '100%';
+
+      // Enable ready state and show tap hint at the bottom
+      isReady = true;
+      if (loadingOverlay) loadingOverlay.classList.add('ready');
+      if (tapHint) tapHint.classList.remove('hidden');
+    } else {
+      if (progressFill) progressFill.style.width = `${progress}%`;
+      if (progressText) progressText.textContent = `${progress}%`;
+    }
+  }, 120);
+
+  // Dismiss loading overlay when clicking anywhere after reaching 100%
+  if (loadingOverlay) {
+    loadingOverlay.addEventListener('click', () => {
+      if (isReady) {
+        loadingOverlay.classList.add('hidden');
+      }
+    });
+  }
+});
