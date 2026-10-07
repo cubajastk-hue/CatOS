@@ -276,6 +276,7 @@ currentAudio.onended = function() {
 
 renderCatofyTracks();
 
+// --- CATTEMP INTERACTION LOGIC ---
 var cattempScreen = document.querySelector("#cattemp");
 var cattempScreenClose = document.querySelector("#cattempclose");
 var cattempScreenOpen = document.querySelector("#cattempopen");
@@ -286,12 +287,187 @@ if (cattempScreen) {
     if (cattempScreenOpen) cattempScreenOpen.addEventListener("click", () => openWindow(cattempScreen));
 }
 
-var catrouletteScreen = document.querySelector("#catroulette");
-var catrouletteScreenClose = document.querySelector("#catrouletteclose");
-var catrouletteScreenOpen = document.querySelector("#catrouletteopen");
+// --- CATGAME INTERACTION LOGIC ---
+var catgameScreen = document.querySelector("#catgame");
+var catgameScreenClose = document.querySelector("#catgameclose");
+var catgameScreenOpen = document.querySelector("#catgameopen");
 
-if (catrouletteScreen) {
-    dragElement(catrouletteScreen);
-    if (catrouletteScreenClose) catrouletteScreenClose.addEventListener("click", () => closeWindow(catrouletteScreen));
-    if (catrouletteScreenOpen) catrouletteScreenOpen.addEventListener("click", () => openWindow(catrouletteScreen));
+if (catgameScreen) {
+  if (typeof dragElement === "function") dragElement(catgameScreen);
+  if (catgameScreenClose) catgameScreenClose.addEventListener("click", () => closeWindow(catgameScreen));
+  if (catgameScreenOpen) catgameScreenOpen.addEventListener("click", () => openWindow(catgameScreen));
 }
+
+// --- CATTEMPLATE ---
+
+(function () {
+  const templateCards = document.querySelectorAll('.template-card');
+  if (!templateCards.length) return;
+
+  const savedTheme = localStorage.getItem('catos_theme') || 'coffee';
+  applyTheme(savedTheme);
+
+  templateCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const themeName = card.getAttribute('data-theme');
+      
+      applyTheme(themeName);
+      localStorage.setItem('catos_theme', themeName);
+    });
+  });
+
+  function applyTheme(themeName) {
+    document.body.classList.remove('theme-cat', 'theme-beans', 'theme-barista');
+
+    if (themeName !== 'coffee' && themeName !== 'default') {
+      document.body.classList.add(`theme-${themeName}`);
+    }
+
+    templateCards.forEach(card => {
+      const cardTheme = card.getAttribute('data-theme');
+      if (cardTheme === themeName || (themeName === 'default' && cardTheme === 'coffee')) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+  }
+})();
+
+// --- CATGAME BOT LOGIC ---
+(function () {
+  const cells = document.querySelectorAll(".cg-cell");
+  const statusText = document.querySelector("#cg-status");
+  const restartBtn = document.querySelector("#cg-restart-btn");
+
+  if (!cells.length) return;
+
+  const PLAYER = "X";
+  const BOT = "O";
+  let board = ["", "", "", "", "", "", "", "", ""];
+  let isGameActive = true;
+
+  const winPatterns = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+
+  function checkWin(currentBoard, p) {
+    return winPatterns.some(pattern => {
+      return pattern.every(index => currentBoard[index] === p);
+    });
+  }
+
+  function checkDraw(currentBoard) {
+    return currentBoard.every(cell => cell !== "");
+  }
+
+  function handleCellClick(e) {
+    const index = e.target.getAttribute("data-index");
+
+    if (board[index] !== "" || !isGameActive) return;
+
+    makeMove(index, PLAYER);
+
+    if (checkWin(board, PLAYER)) {
+      statusText.textContent = "You win! 🎉";
+      isGameActive = false;
+      return;
+    }
+
+    if (checkDraw(board)) {
+      statusText.textContent = "It's a draw! 🤝";
+      isGameActive = false;
+      return;
+    }
+
+    isGameActive = false;
+    statusText.textContent = "Bot is thinking...";
+
+    setTimeout(() => {
+      const bestMove = getBestMove(board);
+      makeMove(bestMove, BOT);
+
+      if (checkWin(board, BOT)) {
+        statusText.textContent = "Bot wins! 🤖";
+      } else if (checkDraw(board)) {
+        statusText.textContent = "It's a draw! 🤝";
+      } else {
+        statusText.textContent = "Your turn (X)";
+        isGameActive = true;
+      }
+    }, 400);
+  }
+
+  function makeMove(index, player) {
+    board[index] = player;
+    const cell = cells[index];
+    cell.textContent = player;
+    cell.classList.add(player === PLAYER ? "x-mark" : "o-mark");
+    cell.disabled = true;
+  }
+
+  function getBestMove(currentBoard) {
+    let bestScore = -Infinity;
+    let move = -1;
+
+    for (let i = 0; i < currentBoard.length; i++) {
+      if (currentBoard[i] === "") {
+        currentBoard[i] = BOT;
+        let score = minimax(currentBoard, 0, false);
+        currentBoard[i] = "";
+        if (score > bestScore) {
+          bestScore = score;
+          move = i;
+        }
+      }
+    }
+    return move;
+  }
+
+  function minimax(currentBoard, depth, isMaximizing) {
+    if (checkWin(currentBoard, BOT)) return 10 - depth;
+    if (checkWin(currentBoard, PLAYER)) return depth - 10;
+    if (checkDraw(currentBoard)) return 0;
+
+    if (isMaximizing) {
+      let bestScore = -Infinity;
+      for (let i = 0; i < currentBoard.length; i++) {
+        if (currentBoard[i] === "") {
+          currentBoard[i] = BOT;
+          let score = minimax(currentBoard, depth + 1, false);
+          currentBoard[i] = "";
+          bestScore = Math.max(score, bestScore);
+        }
+      }
+      return bestScore;
+    } else {
+      let bestScore = Infinity;
+      for (let i = 0; i < currentBoard.length; i++) {
+        if (currentBoard[i] === "") {
+          currentBoard[i] = PLAYER;
+          let score = minimax(currentBoard, depth + 1, true);
+          currentBoard[i] = "";
+          bestScore = Math.min(score, bestScore);
+        }
+      }
+      return bestScore;
+    }
+  }
+
+  function resetGame() {
+    board = ["", "", "", "", "", "", "", "", ""];
+    isGameActive = true;
+    statusText.textContent = "Your turn (X)";
+
+    cells.forEach(cell => {
+      cell.textContent = "";
+      cell.className = "cg-cell";
+      cell.disabled = false;
+    });
+  }
+
+  cells.forEach(cell => cell.addEventListener("click", handleCellClick));
+  if (restartBtn) restartBtn.addEventListener("click", resetGame);
+})();

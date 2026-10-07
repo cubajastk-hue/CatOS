@@ -64,35 +64,72 @@
   </div>
 </div>
 
-  <!-- CATTEMP WINDOW -->
+<!-- CATTEMP WINDOW -->
 <div class="window" id="cattemp">
   <div class="window-header" id="cattempheader">
     <span class="window-title">catTemp</span>
     <div class="window-controls">
-      <span id="cattempclose" class="close-btn" title="Close">✕</span>        
+      <span id="cattempclose" class="close-btn" title="Close">✕</span>
     </div>
   </div>
 
   <div class="cattemp-container">
-    <div>  <!-- catTemp content-->
+    <p class="cattemp-subtitle">Choose Template</p>
+    
+    <div class="template-grid">
+      <div class="template-card active" data-theme="coffee">
+        <div class="theme-preview preview-coffee"></div>
+        <p>1. Coffee</p>
+      </div>
+
+      <div class="template-card" data-theme="cat">
+        <div class="theme-preview preview-cat"></div>
+        <p>2. Cat</p>
+      </div>
+
+      <div class="template-card" data-theme="beans">
+        <div class="theme-preview preview-beans"></div>
+        <p>3. Coffee Beans</p>
+      </div>
+
+      <div class="template-card" data-theme="barista">
+        <div class="theme-preview preview-barista"></div>
+        <p>4. Barista Cat</p>
+      </div>
     </div>
   </div>
 </div>
 
-  <!-- CATROULETTE WINDOW -->
-  <div class="window" id="catroulette">
-  <div class="window-header" id="catrouletteheader">
-    <span class="window-title">catRoulette</span>
+<!-- CATGAME WINDOW -->
+<div class="window" id="catgame">
+  <div class="window-header" id="catgameheader">
+    <span class="window-title">CatGame</span>
     <div class="window-controls">
-      <span id="catrouletteclose" class="close-btn" title="Close">✕</span>        
+      <span id="catgameclose" class="close-btn" title="Close">✕</span>
     </div>
   </div>
 
-  <div class="catroulette-container">
-    <div>  <!-- catRoulette content-->
+  <div class="catgame-container">
+    <div id="cg-status" class="cg-status">Your turn (X)</div>
+
+    <div class="cg-board" id="cg-board">
+      <button class="cg-cell" data-index="0"></button>
+      <button class="cg-cell" data-index="1"></button>
+      <button class="cg-cell" data-index="2"></button>
+      <button class="cg-cell" data-index="3"></button>
+      <button class="cg-cell" data-index="4"></button>
+      <button class="cg-cell" data-index="5"></button>
+      <button class="cg-cell" data-index="6"></button>
+      <button class="cg-cell" data-index="7"></button>
+      <button class="cg-cell" data-index="8"></button>
+    </div>
+
+    <div class="cg-controls">
+      <button id="cg-restart-btn" class="cat-btn">Restart Game</button>
     </div>
   </div>
 </div>
+
 
   <!-- FOOTER -->
   <div class="Footer" id="top">
@@ -114,12 +151,9 @@
     <div class="App" id="cattempopen">
       <img src="images/paintbrush.png" alt="catTemp" class="app-icon">
     </div>
-    <div class="App" id="catrouletteopen">
-      <img src="images/poker-chip.png" alt="catRoulette" class="app-icon">
-    </div>
-    <div class="App" id="catsettingsopen">
-      <img src="images/settings.png" alt="catSettings" class="app-icon">
-    </div>
+    <div class="App" id="catgameopen" title="CatGame">
+      <img src="images/poker-chip.png" alt="CatGame" class="app-icon">
+     </div>
   </div>
 
   <script src="script.js"></script>

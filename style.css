@@ -21,6 +21,7 @@ a {
   font-family: 'Courier New', Courier, monospace;
   overflow: hidden; 
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 0;
 }
 
 
@@ -91,11 +92,11 @@ a {
 }
 
 .Crossaint2 {
-  transform: rotate(30deg);
+   transform: rotate(10deg);
 }
 
 .Crossaint3 {
-  transform: rotate(-15deg);
+  transform: rotate(35deg);
 }
 
 .Instagram, .Google {
@@ -369,7 +370,198 @@ a {
   display: none;
 }
 
-#catroulette {
+#catgame {
   position: absolute;
   display: none;
 }
+
+#catsettings {
+  position: absolute;
+  display: none;
+}
+
+/* ZÁKLADNÍ POZADÍ A TÉMATA */
+body {
+  background-image: url('images/bg-coffee.png'); /* Výchozí pozadí */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  transition: background-image 0.3s ease-in-out;
+}
+
+body.theme-cat {
+  background-image: url('images/bg-cat.png');
+}
+
+body.theme-beans {
+  background-image: url('images/bg-beans.png');
+}
+
+body.theme-barista {
+  background-image: url('images/bg-barista.png');
+}
+
+/* STYLY PRO CATTEMP OKNO */
+#cattemp {
+  width: 350px;
+  height: 365px;
+}
+
+.cattemp-container {
+  padding-right: 16px;
+  padding-left: 16px;
+  text-align: center;
+}
+
+.cattemp-subtitle {
+  font-weight: bold;
+  /*margin-bottom: 16px;*/
+  color: #6C5C48;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.template-card {
+  background-color: #EBD3C0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.template-card:hover {
+  transform: translateY(-2px);
+  background-color: #DFBFA7;
+}
+
+.template-card.active {
+  border-color: #6C5C48;
+  box-shadow: 0 0 8px rgba(108, 92, 72, 0.4);
+}
+
+.template-card p {
+  margin: 6px 0 0 0;
+  font-size: 12px;
+  font-weight: bold;
+  color: #534636;
+}
+
+.preview-coffee  { background-image: url('images/bg-coffee-preview.png'); }
+.preview-cat     { background-image: url('images/bg-cat-preview.png'); }
+.preview-beans   { background-image: url('images/bg-beans-preview.png'); }
+.preview-barista { background-image: url('images/bg-barista-preview.png'); }
+
+.theme-preview {
+  width: 100%;
+  height: 98px;
+  border-radius: 8px;
+  overflow: hidden; 
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  image-rendering: auto;
+}
+
+/* CATGAME APP STYLES */
+#catgame {
+  width: 300px;
+}
+
+.catgame-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.cg-status {
+  font-weight: bold;
+  font-size: 15px;
+  color: #534636;
+  text-align: center;
+  min-height: 22px;
+}
+
+.cg-board {
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  grid-template-rows: repeat(3, 70px);
+  gap: 8px;
+  background-color: #6C5C48;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.cg-cell {
+  width: 70px;
+  height: 70px;
+  background-color: #EFDDCC;
+  border: none;
+  border-radius: 8px;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.cg-cell:hover:not(:disabled) {
+  background-color: #E2CEA8;
+  transform: scale(0.97);
+}
+
+.cg-cell:disabled {
+  cursor: default;
+}
+
+.cg-cell.x-mark {
+  color: #C62828;
+}
+
+.cg-cell.o-mark {
+  color: #1565C0;
+}
+
+/* CAT BUTTON STYLES */
+.cat-btn {
+  background-color: #6C5C48;
+  color: #EFDDCC;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.cat-btn:hover:not(:disabled) {
+  background-color: #534636;
+  transform: scale(1.02);
+}
+
+.cat-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.cat-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
