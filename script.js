@@ -121,33 +121,46 @@ if (notesScreen) {
 // 5. Notes App with LocalStorage
 var defaultNotes = [
   {
-    title: "Welcome",
-    date: "06/28/2023",
+    title: "welcome",
+    date: "10/08/2026",
     content: `
       <p contenteditable="true">
-        Welcome to <strong>Hacker Notes</strong><br><br>
+        Welcome to the <strong>catOS</strong> scratchpad.<br><br>
         <img src="images/Croissant.png" class="note-img" alt="Croissant" /><br><br>
-        This is a place where I store my thoughts as they come to mind. What exactly will you find when browsing through these notes? As I <del>once said</del> <ins>always say</ins>
+        Just a quick spot to dump random thoughts, dev logs, or task lists. As the old dev saying goes:
       </p>
       <blockquote contenteditable="true">
-        <i>Time Will Tell<br>~ Jastk</i>
+        <i>"Bug-free code is like a tailless cat — technically possible, but looks pretty suspicious."<br>~ catOS Dev</i>
       </blockquote>
       <p contenteditable="true">
-        I suppose you may see a bit of content about technology. Perhaps some insights regarding recent projects. Maybe even some thoughts regarding nature & tea? Go and find out!
+        Feel free to edit these, clear them out, or add your own notes. Enjoy poking around! 
       </p>
     `
   },
   {
-    title: "catOS Ideas",
-    date: "07/01/2023",
+    title: "catOS roadmap",
+    date: "10/08/2026",
     content: `
       <p contenteditable="true">
-        <strong>Ideas for catOS:</strong><br><br>
-        🥐 Add draggable windows<br>
-        🥐 Custom wallpapers<br>
-        🥐 Playable mini-games
-
-        Its AI generated ...
+        <strong>Stuff to build next:</strong><br><br>
+        Smooth draggable and resizable desktop windows<br>
+         Custom wallpaper support & Catppuccin theme<br>
+         Soft UI sound effects (maybe a tiny purr on save?)<br>
+         Mini terminal window (with a working <code>meow</code> command)<br>
+        A small playable arcade game for brain breaks
+      </p>
+    `
+  },
+  {
+    title: "dev setup",
+    date: "10/08/2026",
+    content: `
+      <p contenteditable="true">
+        <strong>The essentials:</strong><br><br>
+        1. Fresh mug of black tea or coffee<br>
+        2. Warm croissant for fuel <br>
+        3. Chill lo-fi synth stream on in the background<br>
+        4. A clean catOS desktop with zero clutter
       </p>
     `
   }
